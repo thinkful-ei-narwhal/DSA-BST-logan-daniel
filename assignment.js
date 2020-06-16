@@ -78,5 +78,78 @@ function addToArr(tree){
 
 // 8)
 
+function balancedBST(tree) {
+  if (!tree){
+    return null;
+  }
+  if (!tree.left) {
+    return !(tree.right && (tree.right.left || tree.right.right));
+  }
+  if (!tree.right) {
+    return !(tree.left && (tree.left.left || tree.left.right));
+  }
+
+  return balancedBST(tree.left) && balancedBST(tree.right);
+}
 
 // 9)
+
+// 3, 5, 4, 6, 1, 0, 2  -> base -> leftArr 1, rightArr 5
+// 3, 1, 5, 2, 4, 6, 0  -> equal -> leftArr 1, rightArr 5
+// 3, 6, 4, 5, 1, 0, 2 -> not equal -> left 1, right 6
+
+function areTheSame(arrOne, arrTwo) {
+  if (arrOne.length !== arrTwo.length) {
+    return false;
+  }
+
+  if (arrOne[0] !== arrTwo[0]) {
+    return false;
+  }
+
+  let base = arrOne[0];
+  let leftArrOne = [];
+  let rightArrOne = [];
+  let leftArrTwo = [];
+  let rightArrTwo = [];
+
+  for (let i = 1; i < arrOne.length; i++) {
+    if (arrOne[i] > base) {
+      rightArrOne.push(arrOne[i]);
+    } else {
+      leftArrOne.push(arrOne[i]);
+    }
+
+    if (arrTwo[i] > base) {
+      rightArrTwo.push(arrTwo[i]);
+    } else {
+      leftArrTwo.push(arrTwo[i]);
+    }
+  }
+
+  if (rightArrOne.length !== rightArrTwo.length){
+    return false;
+  }
+
+  if (leftArrOne.length !== leftArrTwo.length){
+    return false;
+  }
+
+  for (let i = 0; i < rightArrOne.length; i++){
+    if (rightArrOne[i] !== rightArrTwo[i]) {
+      return false;
+    }
+  }
+
+  for (let i = 0; i < leftArrOne.length; i++){
+    if (leftArrOne[i] !== leftArrTwo[i]) {
+      return false;
+    }
+  }
+
+  return true;
+
+}
+
+// tine complexity is O(n) linear but there are 3 of them.  Best case is constant,
+// worst is 3n.
